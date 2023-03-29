@@ -8,16 +8,137 @@
 </head>
 <body>
     <!-- DOCUMENT OBJECT MODEL (DOM) -->
+    <header>
+        <img src="images/rickandmortylogo.png" id="logo">
+    </header>
+
+    <main>
+        <section class="character-card" style="display:none;">
+            <h1 class="section-title">Title text</h1>
+            <hr/>
+            <img src="images/rick.png" class="section-img">
+            <hr/>
+            <p class="section-body-text">Body text</p>
+        </section>
+    </main>
 
     <!-- JAVASCRIPT -->
     <script>
+        window.onload = async () => {
+            fetch('https://rickandmortyapi.com/api/character')
+            .then(response => response.json())
+            .then(data => {
+                let characters = data.results;
+                characters.forEach(character => {
+                    console.log(character);
 
+                    let characterCard = document.createElement('section');
+                    characterCard.className = 'character-card';
+
+                    let characterTitle = document.createElement('h1');
+                    characterTitle.className = 'section-title';
+                    characterTitle.innerHTML = character.name;
+
+                    let line1 = document.createElement('hr');
+
+                    let characterImage = document.createElement('img');
+                    characterImage.className = 'section-img';
+                    characterImage.src = character.image;
+
+                    let line2 = document.createElement('hr');
+
+                    let characterBodyText = document.createElement('p');
+                    characterBodyText.className = 'section-body-text';
+                    characterBodyText.innerText = `Gender: ${character.gender} \n Notable Location: ${character.location.name} \n Origin Planet: ${character.origin.name} \n Species: ${character.species}`;
+
+                    characterCard.append(characterTitle);
+                    characterCard.append(line1);
+                    characterCard.append(characterImage);
+                    characterCard.append(line2);
+                    characterCard.append(characterBodyText);
+
+                    document.querySelector('main').append(characterCard);
+                });
+            })
+            .catch(error => console.log(error));
+        }
     </script>
 
     <!-- STYLES -->
     <style>
         * {
-            background-color: rgb(35, 35, 35);
+            margin: 0;
+
+            text-decoration: none;
+
+            list-style: none;
+
+            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        body {
+
+            background-attachment: fixed;
+        }
+
+        header {
+            background: linear-gradient(to bottom, rgb(136, 211, 127), rgb(125, 255, 212));
+
+            display:flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border: 1px solid white;
+        }
+
+        #logo {
+            width: 20%;
+
+            margin: 15px;
+
+            transition: 0.5s;
+        }
+
+        #logo:hover {
+            width: 22%;
+
+            transition: 0.5s;
+        }
+
+        main {
+            width: 100%;
+        }
+
+        main section {
+            margin: 10px;
+
+            border: 1px solid white;
+
+            padding: 10px;
+
+            border-radius: 8px;
+
+            display:inline-block;
+
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+            background: linear-gradient(to bottom, rgb(73, 180, 178), rgb(62, 255, 130));
+        }
+
+        main section h1, p {
+            padding: 15px;
+
+            color: white;
+
+            text-shadow: 1px 1px black;
+        }
+
+        .section-img {
+            width: auto;
+
+            padding: 10px 0px 10px 0px;
         }
     </style>
 </body>
