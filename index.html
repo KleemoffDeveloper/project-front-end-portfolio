@@ -11,14 +11,25 @@
 <body>
     <!-- DOCUMENT OBJECT MODEL (DOM) -->
     <header>
+        <img src="images/rickandmortylogo.png" id="logo">
         <form>
             <img src="images/search-magnifying-glass-svgrepo-com.png" name="search-icon">
             <input id="searchbar" type="search" placeholder="Search character...">
         </form>
-        <img src="images/rickandmortylogo.png" id="logo">
+        <a href="https://www.linkedin.com/in/silis-kleemoff/" class="nav-links">My LinkedIn</a>
+        <a href="#" class="nav-links">About Me</a>
     </header>
 
     <main>
+        <div id="initial-reading">
+            <h1>Project-Front-End-Portfolio</h1>
+            <p>
+                By <a href="https://github.com/KleemoffDeveloper" target="blank">Kleemoff Dev</a>
+                <br>
+                Theme: <b>Rick & Morty</b>
+            </p>
+        </div>
+
         <section class="character-card" style="display:none;">
             <h1 class="section-title">Title text</h1>
             <hr/>
@@ -81,6 +92,10 @@
                     card.style.display = cardTitle.toLowerCase().includes(searchbar.value.toLowerCase()) ? '' : 'none';
                 })
             };
+
+            document.getElementById('logo').addEventListener('click', () => {
+                window.open('https://rickandmortyapi.com/', 'blank')
+            })
         }
     </script>
 
@@ -139,6 +154,10 @@
             transition: 0.5s;
         }
 
+        main {
+            text-align: center;
+        }
+
         main section {
             margin: 10px;
 
@@ -155,6 +174,8 @@
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
             background: linear-gradient(to bottom, rgb(73, 180, 178), rgb(62, 255, 130));
+
+            width: 300px;
         }
 
         main section h1, p {
@@ -169,6 +190,45 @@
             width: auto;
 
             padding: 10px 0px 10px 0px;
+        }
+
+        a {
+            color:cyan;
+            text-shadow: 1px 1px rgba(0, 0, 0, 0.765);
+
+            transition: 0.5s;
+        }
+
+        a:hover {
+            font-size: 110%;
+
+            transition: 0.5s;
+        }
+
+        #initial-reading {
+            margin: 5px;
+
+            padding: 25px;
+
+            border-radius: 10px;
+
+            background:radial-gradient( rgba(172, 255, 47, 0.608), rgba(255, 255, 255, 0.588));
+
+            width: auto;
+        }
+
+        #initial-reading h1 {
+            text-align: center;
+
+            color:rgb(170, 255, 0);
+
+            text-shadow: 1px 1px 10px rgb(16, 22, 7);
+        }
+
+        @media only screen and (max-width: 683px){
+            .nav-links {
+                display: none;
+            }
         }
     </style>
 </body>
