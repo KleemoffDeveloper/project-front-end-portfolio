@@ -4,11 +4,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silis' Portfolio</title>
+    <title>Rick & Morty Portfolio</title>
+    <link rel="stylesheet" href="notusingthis.css">
+    <script src="notusingthis.js" defer></script>
 </head>
 <body>
     <!-- DOCUMENT OBJECT MODEL (DOM) -->
     <header>
+        <form>
+            <img src="images/search-magnifying-glass-svgrepo-com.png" name="search-icon">
+            <input id="searchbar" type="search" placeholder="Search character...">
+        </form>
         <img src="images/rickandmortylogo.png" id="logo">
     </header>
 
@@ -24,14 +30,14 @@
 
     <!-- JAVASCRIPT -->
     <script>
+        let characterCards = [];
+
         window.onload = async () => {
-            fetch('https://rickandmortyapi.com/api/character')
+            await fetch('https://rickandmortyapi.com/api/character')
             .then(response => response.json())
             .then(data => {
                 let characters = data.results;
                 characters.forEach(character => {
-                    console.log(character);
-
                     let characterCard = document.createElement('section');
                     characterCard.className = 'character-card';
 
@@ -58,9 +64,23 @@
                     characterCard.append(characterBodyText);
 
                     document.querySelector('main').append(characterCard);
+
+                    characterCards.push(characterCard);
                 });
             })
             .catch(error => console.log(error));
+            
+            // Searching for characters (filter)
+            let searchbar = document.querySelector('#searchbar');
+
+            searchbar.oninput = (event) => {
+                characterCards.map(card => {
+                    let cardTitle = card.querySelector('.section-title').innerHTML;
+
+                    // Remember to put .toLowerCase() || .toUpperCase() since strings are case sensitive
+                    card.style.display = cardTitle.toLowerCase().includes(searchbar.value.toLowerCase()) ? '' : 'none';
+                })
+            };
         }
     </script>
 
@@ -76,9 +96,8 @@
             font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         }
 
-        body {
-
-            background-attachment: fixed;
+        img {
+            width: 18px;
         }
 
         header {
@@ -88,9 +107,22 @@
 
             align-items: center;
 
-            justify-content: center;
+            justify-content: space-around;
 
             border: 1px solid white;
+        }
+
+        form {
+            display: flex;
+            align-items: center;
+        }
+
+        form img {
+            padding: 5px;
+        }
+
+        form button {
+            margin-left: 2px;
         }
 
         #logo {
@@ -107,10 +139,6 @@
             transition: 0.5s;
         }
 
-        main {
-            width: 100%;
-        }
-
         main section {
             margin: 10px;
 
@@ -122,6 +150,8 @@
 
             display:inline-block;
 
+            text-align: center;
+
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
             background: linear-gradient(to bottom, rgb(73, 180, 178), rgb(62, 255, 130));
@@ -132,7 +162,7 @@
 
             color: white;
 
-            text-shadow: 1px 1px black;
+            text-shadow: 1px 1px rgba(0, 0, 0, 0.475);
         }
 
         .section-img {
