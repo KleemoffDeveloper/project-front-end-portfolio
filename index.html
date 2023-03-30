@@ -10,34 +10,54 @@
 </head>
 <body>
     <!-- DOCUMENT OBJECT MODEL (DOM) -->
-    <header>
-        <img src="images/rickandmortylogo.png" id="logo">
-        <form>
-            <img src="images/search-magnifying-glass-svgrepo-com.png" name="search-icon">
-            <input id="searchbar" type="search" placeholder="Search character...">
-        </form>
-        <a href="https://www.linkedin.com/in/silis-kleemoff/" class="nav-links">My LinkedIn</a>
-        <a href="#" class="nav-links">About Me</a>
-    </header>
-
-    <main>
-        <div id="initial-reading">
-            <h1>Project-Front-End-Portfolio</h1>
-            <p>
-                By <a href="https://github.com/KleemoffDeveloper" target="blank">Kleemoff Dev</a>
-                <br>
-                Theme: <b>Rick & Morty</b>
-            </p>
+    <div id="whole-page">
+        <header>
+            <img src="images/rickandmortylogo.png" id="logo">
+            <form>
+                <img src="images/search-magnifying-glass-svgrepo-com.png" name="search-icon" id="search-icon">
+                <input id="searchbar" type="search" placeholder="Search character...">
+            </form>
+            <a href="https://www.linkedin.com/in/silis-kleemoff/" class="nav-links" target="_blank">My LinkedIn</a>
+            <a href="https://rickandmortyapi.com/" class="nav-links" target="_blank">API Source</a>
+            <a href="#" class="nav-links">About Me</a>
+        </header>
+    
+        <main>
+            <div id="initial-reading">
+                <h1>Project-Front-End-Portfolio</h1>
+                <p>
+                    By <a href="https://github.com/KleemoffDeveloper" target="blank">Kleemoff Dev</a>
+                    <br>
+                    Theme: <b>Rick & Morty</b>
+                </p>
+                <div hidden>
+                    <label>Toggle Theme: <button>switch theme</button></label>
+                </div>
+            </div>
+    
+            <h1 style="display:none; padding: 50px;" id="no-results-text">No results...</h1>
+    
+            <section class="character-card" style="display:none;">
+                <h1 class="section-title">Title text</h1>
+                <hr/>
+                <img src="images/rick.png" class="section-img">
+                <hr/>
+                <p class="section-body-text">Body text</p>
+            </section>
+        </main>
+    
+        <div class="about-me" style="display:none;">
+            <section class="character-card">
+                <h1>Idk why there's a portal above my head but it looks kinda cool</h1>
+                <iframe src="https://giphy.com/embed/i2tLw5ZyikSFdkeGHT" class="giphy-embed" allowFullScreen></iframe>
+                <h1 class="section-title">Silis Kleemoff</h1>
+                <hr/>
+                <img src="images/Profile Picture.jpg" class="section-img" id="about-me-img">
+                <hr/>
+                <p class="section-body-text">Gender: Male<br>Notable Location: Brooklyn, New York<br>Origin Planet: Earth-616<br>Species: Pikachu</p>
+            </section>
         </div>
-
-        <section class="character-card" style="display:none;">
-            <h1 class="section-title">Title text</h1>
-            <hr/>
-            <img src="images/rick.png" class="section-img">
-            <hr/>
-            <p class="section-body-text">Body text</p>
-        </section>
-    </main>
+    </div>
 
     <!-- JAVASCRIPT -->
     <script>
@@ -79,7 +99,20 @@
                     characterCards.push(characterCard);
                 });
             })
-            .catch(error => console.log(error));
+            .catch(error => {
+                console.log(error);
+
+                // I guess I can just display an error message
+                document.getElementById('whole-page').style.display = 'none';
+
+                let errorMessage = document.createElement('h1');
+
+                errorMessage.className = 'errorMsg';
+
+                errorMessage.innerText = `Silis Kleemoff\n(Project-Front-End-Portfolio)\n\nSomething went wrong, please try refreshing the page... \n\n${error}`;
+
+                document.body.append(errorMessage);
+            });
             
             // Searching for characters (filter)
             let searchbar = document.querySelector('#searchbar');
@@ -90,12 +123,41 @@
 
                     // Remember to put .toLowerCase() || .toUpperCase() since strings are case sensitive
                     card.style.display = cardTitle.toLowerCase().includes(searchbar.value.toLowerCase()) ? '' : 'none';
-                })
+                });
+
+                // If nothing matches, provide a message that tells the user
+                document.getElementById('no-results-text').style.display = noResults() ? 'none' : '';
             };
 
+            const noResults = () => {
+                let found = false;
+                characterCards.forEach(card => {
+                    if(card.style.display === '')
+                        found = true;
+                });
+
+                return found;
+            }
+
+            // This is the About Me <a> tag
+            document.getElementsByClassName('nav-links')[2].addEventListener('click', () => {
+                document.querySelector('main').style.display = 'none';
+                document.querySelector('form').style.display = 'none';
+
+                for(const section of document.querySelectorAll('.about-me')) {
+                    section.style.display = '';
+                }
+            });
+
+            // This is the huge rick and morty logo
             document.getElementById('logo').addEventListener('click', () => {
-                window.open('https://rickandmortyapi.com/', 'blank')
-            })
+                document.querySelector('main').style.display = '';
+                document.querySelector('form').style.display = '';
+
+                for(const section of document.querySelectorAll('.about-me')) {
+                    section.style.display = 'none';
+                }
+            });
         }
     </script>
 
@@ -158,7 +220,7 @@
             text-align: center;
         }
 
-        main section {
+        section {
             margin: 10px;
 
             border: 1px solid white;
@@ -169,8 +231,6 @@
 
             display:inline-block;
 
-            text-align: center;
-
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
             background: linear-gradient(to bottom, rgb(73, 180, 178), rgb(62, 255, 130));
@@ -178,7 +238,15 @@
             width: 300px;
         }
 
-        main section h1, p {
+        section h1 {
+            text-align: center;
+        }
+
+        section p {
+            text-align: left;
+        }
+
+        section h1, p {
             padding: 15px;
 
             color: white;
@@ -187,7 +255,9 @@
         }
 
         .section-img {
-            width: auto;
+            width: inherit;
+
+            display: inline-block;
 
             padding: 10px 0px 10px 0px;
         }
@@ -206,13 +276,13 @@
         }
 
         #initial-reading {
-            margin: 5px;
+            /* margin: 5px; */
 
             padding: 25px;
 
-            border-radius: 10px;
+            /* border-radius: 10px; */
 
-            background:radial-gradient( rgba(172, 255, 47, 0.608), rgba(255, 255, 255, 0.588));
+            /* background:radial-gradient( rgba(172, 255, 47, 0.608), rgb(114, 255, 144)); */
 
             width: auto;
         }
@@ -225,7 +295,47 @@
             text-shadow: 1px 1px 10px rgb(16, 22, 7);
         }
 
+        #initial-reading p {
+            color:white;
+
+            text-shadow: 1px 1px 5px rgb(0, 0, 0);
+        }
+
+        .about-me {
+            text-align: center;
+        }
+
+        .errorMsg {
+            color:rgb(170, 255, 0);
+                
+            text-align: center;
+
+            margin: 50px;
+
+            font-size: medium;
+
+            text-shadow: 1px 1px 3px black;
+
+            padding: 25px;
+
+            /* border: 1px solid rgb(0, 255, 0); */
+
+            /* border-radius: 8px; */
+
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+            line-height: 25px;
+        }
+
         @media only screen and (max-width: 683px){
+            #search-icon {
+                display: none;
+            }
+
+            #logo {
+                width: 40%;
+            }
+
             .nav-links {
                 display: none;
             }
