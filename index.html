@@ -64,6 +64,10 @@
         let characterCards = [];
 
         window.onload = async () => {
+            document.querySelector('form').onsubmit = (event) => {
+                event.preventDefault();
+            }
+
             await fetch('https://rickandmortyapi.com/api/character')
             .then(response => response.json())
             .then(data => {
