@@ -4,346 +4,49 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rick & Morty Portfolio</title>
-    <link rel="stylesheet" href="notusingthis.css">
-    <script src="notusingthis.js" defer></script>
+    <title>Intergalactic Buddies - Home</title>
+    <script src="src/index.js" type="module" defer></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- DOCUMENT OBJECT MODEL (DOM) -->
-    <div id="whole-page">
-        <header>
-            <img src="images/rickandmortylogo.png" id="logo">
-            <form>
-                <img src="images/search-magnifying-glass-svgrepo-com.png" name="search-icon" id="search-icon">
-                <input id="searchbar" type="search" placeholder="Search character...">
-            </form>
-            <a href="https://www.linkedin.com/in/silis-kleemoff/" class="nav-links" target="_blank">My LinkedIn</a>
-            <a href="https://rickandmortyapi.com/" class="nav-links" target="_blank">API Source</a>
-            <a href="#" class="nav-links">About Me</a>
-        </header>
-    
-        <main>
-            <div id="initial-reading">
-                <h1>Project-Front-End-Portfolio</h1>
-                <p>
-                    By <a href="https://github.com/KleemoffDeveloper" target="blank">Kleemoff Dev</a>
-                    <br>
-                    Theme: <b>Rick & Morty</b>
-                </p>
-                <div hidden>
-                    <label>Toggle Theme: <button>switch theme</button></label>
-                </div>
+    <!-- Navbar -->
+    <header>
+        <ul class="nav-links">
+            <img src="images/rickmortylogo.png" class="logo">
+            <li><a href="about.html">About</a></li>
+            <li><a href="https://rickandmortyapi.com" target="_blank">API Source</a></li>
+            <li><a href="https://en.wikipedia.org/wiki/Rick_and_Morty" target="_blank">Rick & Morty Wiki</a></li>
+        </ul>
+    </header>
+
+    <main class="main">
+        <section class="profile">
+            <h1>Instructions</h1>
+            <p>
+                Intergalactic Buddies is a satirical website for finding the best intergalactic/interdimensional/interspecies buddy in the multiverse.
+                Fill out your user profile information in this section before searching for a buddy in the site. Your traits like gender, species and planet
+                origin will affect the compatibility you have with other buddying users here so be aware of that. Have fun with your buddies on your multiversal
+                adventures!
+            </p>
+            <hr/>
+            <h1>Profile</h1>
+            <ul class="profile-input">
+                <input type="text" placeholder=" Enter your name...">
+                <input type="text" placeholder=" Enter your gender...">
+                <input type="text" placeholder=" Enter your birthplace...">
+            </ul>
+        </section>
+        <section class="all-characters">
+            <div class="section-header">
+                <h1>
+                    Search for buddies:
+                    <form class="searchbar">
+                        <input type="text" placeholder=" type here...">
+                        <button type="submit">Submit</button>
+                    </form>
+                </h1>
             </div>
-    
-            <h1 style="display:none; padding: 50px;" id="no-results-text">No results...</h1>
-    
-            <section class="character-card" style="display:none;">
-                <h1 class="section-title">Title text</h1>
-                <hr/>
-                <img src="images/rick.png" class="section-img">
-                <hr/>
-                <p class="section-body-text">Body text</p>
-            </section>
-        </main>
-    
-        <div class="about-me" style="display:none;">
-            <section class="character-card">
-                <h1>Idk why there's a portal above my head but it looks kinda cool</h1>
-                <iframe src="https://giphy.com/embed/i2tLw5ZyikSFdkeGHT" class="giphy-embed" allowFullScreen></iframe>
-                <h1 class="section-title">Silis Kleemoff</h1>
-                <hr/>
-                <img src="images/Profile Picture.jpg" class="section-img" id="about-me-img">
-                <hr/>
-                <p class="section-body-text">Gender: Male<br>Notable Location: Brooklyn, New York<br>Origin Planet: Earth-616<br>Species: Pikachu</p>
-            </section>
-        </div>
-    </div>
-
-    <!-- JAVASCRIPT -->
-    <script>
-        let characterCards = [];
-
-        window.onload = async () => {
-            document.querySelector('form').onsubmit = (event) => {
-                event.preventDefault();
-            }
-
-            await fetch('https://rickandmortyapi.com/api/character')
-            .then(response => response.json())
-            .then(data => {
-                let characters = data.results;
-                characters.forEach(character => {
-                    let characterCard = document.createElement('section');
-                    characterCard.className = 'character-card';
-
-                    let characterTitle = document.createElement('h1');
-                    characterTitle.className = 'section-title';
-                    characterTitle.innerHTML = character.name;
-
-                    let line1 = document.createElement('hr');
-
-                    let characterImage = document.createElement('img');
-                    characterImage.className = 'section-img';
-                    characterImage.src = character.image;
-
-                    let line2 = document.createElement('hr');
-
-                    let characterBodyText = document.createElement('p');
-                    characterBodyText.className = 'section-body-text';
-                    characterBodyText.innerText = `Gender: ${character.gender} \n Notable Location: ${character.location.name} \n Origin Planet: ${character.origin.name} \n Species: ${character.species}`;
-
-                    characterCard.append(characterTitle);
-                    characterCard.append(line1);
-                    characterCard.append(characterImage);
-                    characterCard.append(line2);
-                    characterCard.append(characterBodyText);
-
-                    document.querySelector('main').append(characterCard);
-
-                    characterCards.push(characterCard);
-                });
-            })
-            .catch(error => {
-                console.log(error);
-
-                // I guess I can just display an error message
-                document.getElementById('whole-page').style.display = 'none';
-
-                let errorMessage = document.createElement('h1');
-
-                errorMessage.className = 'errorMsg';
-
-                errorMessage.innerText = `Silis Kleemoff\n(Project-Front-End-Portfolio)\n\nSomething went wrong, please try refreshing the page... \n\n${error}`;
-
-                document.body.append(errorMessage);
-            });
-            
-            // Searching for characters (filter)
-            let searchbar = document.querySelector('#searchbar');
-
-            searchbar.oninput = (event) => {
-                characterCards.map(card => {
-                    let cardTitle = card.querySelector('.section-title').innerHTML;
-
-                    // Remember to put .toLowerCase() || .toUpperCase() since strings are case sensitive
-                    card.style.display = cardTitle.toLowerCase().includes(searchbar.value.toLowerCase()) ? '' : 'none';
-                });
-
-                // If nothing matches, provide a message that tells the user
-                document.getElementById('no-results-text').style.display = noResults() ? 'none' : '';
-            };
-
-            const noResults = () => {
-                let found = false;
-                characterCards.forEach(card => {
-                    if(card.style.display === '')
-                        found = true;
-                });
-
-                return found;
-            }
-
-            // This is the About Me <a> tag
-            document.getElementsByClassName('nav-links')[2].addEventListener('click', () => {
-                document.querySelector('main').style.display = 'none';
-                document.querySelector('form').style.display = 'none';
-
-                for(const section of document.querySelectorAll('.about-me')) {
-                    section.style.display = '';
-                }
-            });
-
-            // This is the huge rick and morty logo
-            document.getElementById('logo').addEventListener('click', () => {
-                document.querySelector('main').style.display = '';
-                document.querySelector('form').style.display = '';
-
-                for(const section of document.querySelectorAll('.about-me')) {
-                    section.style.display = 'none';
-                }
-            });
-        }
-    </script>
-
-    <!-- STYLES -->
-    <style>
-        * {
-            margin: 0;
-
-            text-decoration: none;
-
-            list-style: none;
-
-            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-        }
-
-        img {
-            width: 18px;
-        }
-
-        header {
-            background: linear-gradient(to bottom, rgb(136, 211, 127), rgb(125, 255, 212));
-
-            display:flex;
-
-            align-items: center;
-
-            justify-content: space-around;
-
-            border: 1px solid white;
-        }
-
-        form {
-            display: flex;
-            align-items: center;
-        }
-
-        form img {
-            padding: 5px;
-        }
-
-        form button {
-            margin-left: 2px;
-        }
-
-        #logo {
-            width: 20%;
-
-            margin: 15px;
-
-            transition: 0.5s;
-        }
-
-        #logo:hover {
-            width: 22%;
-
-            transition: 0.5s;
-        }
-
-        main {
-            text-align: center;
-        }
-
-        section {
-            margin: 10px;
-
-            border: 1px solid white;
-
-            padding: 10px;
-
-            border-radius: 8px;
-
-            display:inline-block;
-
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-
-            background: linear-gradient(to bottom, rgb(73, 180, 178), rgb(62, 255, 130));
-
-            width: 300px;
-        }
-
-        section h1 {
-            text-align: center;
-        }
-
-        section p {
-            text-align: left;
-        }
-
-        section h1, p {
-            padding: 15px;
-
-            color: white;
-
-            text-shadow: 1px 1px rgba(0, 0, 0, 0.475);
-        }
-
-        .section-img {
-            width: inherit;
-
-            display: inline-block;
-
-            padding: 10px 0px 10px 0px;
-        }
-
-        a {
-            color:cyan;
-            text-shadow: 1px 1px rgba(0, 0, 0, 0.765);
-
-            transition: 0.5s;
-        }
-
-        a:hover {
-            font-size: 110%;
-
-            transition: 0.5s;
-        }
-
-        #initial-reading {
-            /* margin: 5px; */
-
-            padding: 25px;
-
-            /* border-radius: 10px; */
-
-            /* background:radial-gradient( rgba(172, 255, 47, 0.608), rgb(114, 255, 144)); */
-
-            width: auto;
-        }
-
-        #initial-reading h1 {
-            text-align: center;
-
-            color:rgb(170, 255, 0);
-
-            text-shadow: 1px 1px 10px rgb(16, 22, 7);
-        }
-
-        #initial-reading p {
-            color:white;
-
-            text-shadow: 1px 1px 5px rgb(0, 0, 0);
-        }
-
-        .about-me {
-            text-align: center;
-        }
-
-        .errorMsg {
-            color:rgb(170, 255, 0);
-                
-            text-align: center;
-
-            margin: 50px;
-
-            font-size: medium;
-
-            text-shadow: 1px 1px 3px black;
-
-            padding: 25px;
-
-            /* border: 1px solid rgb(0, 255, 0); */
-
-            /* border-radius: 8px; */
-
-            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-
-            line-height: 25px;
-        }
-
-        @media only screen and (max-width: 683px){
-            #search-icon {
-                display: none;
-            }
-
-            #logo {
-                width: 40%;
-            }
-
-            .nav-links {
-                display: none;
-            }
-        }
-    </style>
+        </section>
+    </main>
 </body>
 </html>
