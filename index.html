@@ -12,7 +12,10 @@
     <!-- Navbar -->
     <header>
         <ul class="nav-links">
-            <img src="images/rickmortylogo.png" class="logo">
+            <h1 style="font-size: small; color:aqua; margin: 0; text-shadow: 1px 1px 5px green; cursor: pointer;">
+                <img src="images/rickmortylogo.png" class="logo">
+                Intergalactic Buddies
+            </h1>
             <li><a href="about.html">About</a></li>
             <li><a href="https://rickandmortyapi.com" target="_blank">API Source</a></li>
             <li><a href="https://en.wikipedia.org/wiki/Rick_and_Morty" target="_blank">Rick & Morty Wiki</a></li>
@@ -27,13 +30,33 @@
                 Fill out your user profile information in the section below before searching for a buddy in the site. Your traits like gender, species and planet
                 origin will affect the compatibility you have with other buddying users here so be aware of that. Have fun with your buddies on your multiversal
                 adventures!
+
+                <h4>
+                    Suggested search queries
+                    <ul>
+                        <br>
+                        - alien
+                        <br>
+                        - robot
+                        <br>
+                        - Rick
+                        <br>
+                        - Morty
+                        <br>
+                        - President
+                    </ul>
+                </h4>
             </p>
             <hr/>
             <h1>Profile</h1>
             <ul class="profile-input">
-                <!-- <input type="text" placeholder=" Enter your name...">
+                <li>- Names must be 3 or more characters...</li>
+                <li>- Gender is required...</li>
+                <li>- Your birthplace doesn't have to be Earth... if you're not from Earth...</li>
+
+                <input type="text" placeholder=" Enter your name...">
                 <input type="text" placeholder=" Enter your gender...">
-                <input type="text" placeholder=" Enter your birthplace..."> -->
+                <input type="text" placeholder=" Enter your birthplace...">
             </ul>
         </section>
         <section class="all-characters">
@@ -42,6 +65,7 @@
                 <input type="text" placeholder=" type here...">
                 <button type="submit">Submit</button>
             </form>
+            <h1 id="no-results" style="display:none; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; text-shadow: 1px 1px 2px rgb(186, 186, 186);">No results...</h1>
         </section>
     </main>
 </body>

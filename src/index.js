@@ -72,27 +72,81 @@ let searchForm = document.querySelector('.searchbar');
 searchForm.onsubmit = (event) => {
     event.preventDefault();
 
+    document.getElementById('no-results').style.display = 'none';
+
+    let profileFinished = true;
+
+    let inputs = document.querySelector('.profile-input').querySelectorAll('input');
+
+    for(let i = 0; i < inputs.length; i++) {
+        if(inputs[i].value.length === 0) {
+            window.alert('Please fill out all forms in the "Profile" section.');
+            profileFinished = false;
+            break;
+        }
+
+        if(inputs[0].value.length < 3) {
+            window.alert('Names must be 3 or more characters...');
+            profileFinished = false;
+            break; 
+        }
+    }
+
     let searchQuery = searchForm.querySelector('input').value.toLowerCase();
 
     for(let i = 0; i < allCharacters.length; i++) {
         let data = allCharacters[i];
         let card = cards[i];
 
+        let queries = [data.name.toLowerCase(), data.gender.toLowerCase(), data.species.toLowerCase(), data.origin.name.toLowerCase()];
+
         let show = 
-            (data.name.toLowerCase().includes(searchQuery) 
+            ((data.name.toLowerCase().includes(searchQuery) 
         || data.gender.toLowerCase().includes(searchQuery) 
         || data.species.toLowerCase().includes(searchQuery)
-        || data.origin.name.toLowerCase().includes(searchQuery)) && searchQuery !== '';
+        || data.origin.name.toLowerCase().includes(searchQuery)));
 
-        if(show) {
+        let isIncludedLiteral = queries.some(query => {
+            return searchQuery.split(' ').filter(keyword => {
+                return query === keyword;
+            })[0]
+        });
+
+        if((show || isIncludedLiteral) && searchQuery !== '' && profileFinished) {
             card.style.display = "";
 
-            card.style.background = "linear-gradient(to bottom, yellowgreen, green)"
+            if(data.compatible) {
+                card.style.background = "linear-gradient(to bottom, whitesmoke, #63ff8d)";
+                card.querySelector('h1').innerText = `${(i + 1)}. ${data.name} (COMPATIBLE)`;
+            }
+            else {
+                card.style.background = "linear-gradient(to bottom, whitesmoke, red)";
+                card.querySelector('h1').innerText = `${(i + 1)}. ${data.name} (INCOMPATIBLE)`;
+            }
         }
-        else {
+        else if(!show && profileFinished){
             card.style.display = "none";
         }
+        else {
+            card.style.display = "";
+
+            card.style.background = "";
+
+            card.querySelector('h1').innerText = `${(i + 1)}. ${data.name}`;
+        }
     }
+
+    let noResults = true;
+
+    for(let i = 0; i < cards.length; i++) {
+        let card = cards[i];
+        if(card.style.display == '') {
+            noResults = false;
+            break;
+        }
+    }
+
+    document.getElementById('no-results').style.display = noResults ? '' : 'none';
 }
 
-export {BASE_URL};
+// export {BASE_URL};

@@ -9,6 +9,59 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+    <!-- Navbar -->
+    <header>
+        <ul class="nav-links">
+            <h1 style="font-size: small; color:aqua; margin: 0; text-shadow: 1px 1px 5px green; cursor: pointer;" id="logo-companion">
+                <img src="images/rickmortylogo.png" class="logo">
+                Intergalactic Buddies
+            </h1>
+            <li><a href="about.html">About</a></li>
+            <li><a href="https://rickandmortyapi.com" target="_blank">API Source</a></li>
+            <li><a href="https://en.wikipedia.org/wiki/Rick_and_Morty" target="_blank">Rick & Morty Wiki</a></li>
+        </ul>
+    </header>
+
+    <main class="main">
+        <section style="border: 1px solid black; margin-bottom: 0; margin: 5px; background: linear-gradient(to bottom,rgb(4, 209, 69), rgb(2, 192, 131));">
+            <h1>
+                About
+            </h1>
+            <p>
+                This project is apart of my wider collection that I've created while enrolled in <a href="https://pursuit.org" target="_blank">Pursuit</a>. 
+                It's a funny story because I don't even watch Rick & Morty, I just like the idea of it because I know it has to do with space and time travel.
+                Anyways, I hope this website at least looks cool even though it has a lack of function (since I am finishing this project <b>LATE</b>)... 
+                Since this is the "About" section, why don't I talk about why I'm submitting this project late?
+            </p>
+            <h1>
+                Why I Finished Late
+            </h1>
+            <p>
+                I kind of over-estimated the amount of work it would take to finish this website so I tried helping my other Fellows 
+                (classmates in <a href="https://pursuit.org" target="_blank">Pursuit</a>). The plan was to finish this in just a few hours before class on the day it was due.
+                Well... I didn't finish LOL! It's kind of good that I didn't finish then because now I have this cool story to share in my "About" section.
+                Thanks for reading!
+            </p>
+        </section>
+        <section class="all-characters">
+            <div class="box-style-1" style="margin-bottom: 55px;">
+                <h1>Silis Kleemoff (DEVELOPER)</h1>
+                <hr/>
+                <img src="images/Profile Picture.jpg">
+                <p>
+                    Gender: Programmer
+                    <br>
+                    From: Earth
+                    <br>
+                    Species: Robot
+                </p>
+            </div>
+        </section>
+    </main>
+    <script>
+        document.querySelector('.box-style-1').addEventListener('click', () => {
+            window.open('https://github.com/kleemoffdeveloper', "_blank");
+        });
+    </script>
 </body>
 </html>

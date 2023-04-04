@@ -18,7 +18,11 @@ header {
     width: 100%;
 }
 
-section h1 {
+p {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+section h1, h4, p {
     padding: 15px;
 }
 
@@ -115,13 +119,13 @@ a:hover {
 
     width: 100%;
 
-    height: 300px;
+    height: inherit;
+
+    margin-bottom: 25px;
 }
 
 .profile  > p {
     padding: 15px;
-
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .profile hr {
@@ -129,12 +133,26 @@ a:hover {
     margin-left: 15px;
 }
 
-.profile input {
+.profile-input input {
     margin-left: 15px;
+    
+    margin-bottom: 5px;
+
+    width: 300px;
+}
+
+.profile-input li {
+    margin-left: 15px;
+
+    margin-bottom: 10px;
 }
 
 .profile-input {
-    display: inline-block;
+    display: grid;
+
+    grid-auto-flow: row;
+
+    width:fit-content;
 }
 
 /* Main */
@@ -177,8 +195,8 @@ a:hover {
 
 @media screen and (max-width: 1000px) {
     .box-style-1 {
-        margin-left: 0;
-        margin-right: 0;
+        margin-left: 5px;
+        margin-right: 5px;
     }
 
     .profile {
