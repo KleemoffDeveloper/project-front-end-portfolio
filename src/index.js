@@ -72,7 +72,7 @@ let searchForm = document.querySelector('.searchbar');
 searchForm.onsubmit = (event) => {
     event.preventDefault();
 
-    let searchQuery = searchForm.querySelector('input').value;
+    let searchQuery = searchForm.querySelector('input').value.toLowerCase();
 
     for(let i = 0; i < allCharacters.length; i++) {
         let data = allCharacters[i];
